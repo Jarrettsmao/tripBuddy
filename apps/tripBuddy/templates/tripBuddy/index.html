@@ -1,0 +1,62 @@
+<head>
+    <style>
+        .container {
+            display: inline-block;
+            border-style: solid;
+            text-align: right;
+            margin: 10px;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .container h3 {
+            text-align: center;
+        }
+
+        .container input {
+            margin: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>Welcome! Sign in to manage your jobs!</h1>
+    <div class=container>
+        <h3>Register</h3>
+        <form action='register' method='post'>
+            {% csrf_token %}
+            First name<input type='text' name='fname'>
+            <br />
+            Last name<input type='text' name='lname'>
+            <br />
+            Email<input type='text' name='email'>
+            <br />
+            Password<input type='password' name='rPass'>
+            <br />
+            Confirm pw<input type='password' name='crPass'>
+            <br />
+            <input type='submit' value='Register'>
+        </form>
+    </div>
+
+    <div class=container>
+        <h3>Login</h3>
+        <form action='login' method='post'>
+            {% csrf_token %}
+            Email<input type='text' name='lemail'>
+            <br />
+            Password<input type='password' name='lpass'>
+            <br />
+            <input type='submit' value='Login'>
+        </form>
+    </div>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+            {% endfor %}
+    </div>
+    {% endif %}
+</body>

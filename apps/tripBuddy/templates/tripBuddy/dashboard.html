@@ -1,0 +1,86 @@
+<head>
+    <style>
+        .trip_table{
+            border-style: solid;
+            display: inline-block;
+        }
+        .trip_table table, tr, td{
+            border: 1px solid black;
+        }
+        #header h2{
+            display:inline-block;
+        }
+        #header a{
+            display:inline-block;
+            text-align: right;
+            margin-left: 60%;
+        }
+        #header form{
+            display:inline-block;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='header'>
+        <h2>Hello {{username}}!</h2>
+        <a href="logout">Logout</a>
+        <form action='new'>
+            {% csrf_token %}
+            <input type='submit' value='Create a new trip!'>
+        </form> 
+    </div>
+
+    <p>Your trips:</p>
+    <table class='trip_table'>
+        <td>Destination</td>
+        <td>Start Date</td>
+        <td>End Date</td>
+        <td>Plan</td>
+        <td>Actions</td>
+        {% for trip in your_trips %}
+        <tr>
+                <td><a href="trips/{{trip.id}}">{{trip.destination}}</a></td>
+            <td>{{trip.start_date}}</td>
+            <td>{{trip.end_date}}</td>
+            <td>{{trip.plan}}</td>
+            <td>
+            {% if trip.creator.id == userID %}
+            |
+            <a href="trips/remove_trip/{{trip.id}}">Remove</a>
+            |
+            <a href="trips/edit/{{trip.id}}">Edit</a>
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}    
+        {% for trip in joined_trips %}
+        <tr>
+                <td><a href="trips/{{trip.id}}">{{trip.destination}}</a></td>
+            <td>{{trip.start_date}}</td>
+            <td>{{trip.end_date}}</td>
+            <td>{{trip.plan}}</td>
+            <td><a href="trips/giveup/{{trip.id}}">Cancel</a></td>
+        </tr>
+        {% endfor %} 
+    </table>
+
+    <p>Other people's trips:</p>
+    <table class='trip_table'>
+        <td>Destination</td>
+        <td>Start Date</td>
+        <td>End Date</td>
+        <td>Plan</td>
+        <td>Want to join?</td>
+        {% for trip in other_trips %}
+        <tr>
+            <td><a href="trips/{{trip.id}}">{{trip.destination}}</a></td>
+            <td>{{trip.start_date}}</td>
+            <td>{{trip.end_date}}</td>
+            <td>{{trip.plan}}</td>
+            <td><a href="trips/add_trip/{{trip.id}}">Join</a></td>
+        </tr>
+        {% endfor %}    
+    </table>
+</body>

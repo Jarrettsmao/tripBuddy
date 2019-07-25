@@ -1,0 +1,45 @@
+<head>
+    <style>
+        .container {
+            border: 1px solid black;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px 0px;
+        }
+        #header h1{
+            display:inline-block;
+            margin-right: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <h1>Hello {{username}}! Read about this trip!</h1>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <h3>{{trip_info.destination}}</h3>
+    <div class=container>
+        Start Date:{{trip_info.start_date}}
+        <br />
+        End Date:{{trip_info.end_date}}
+        <br />
+        Created On: {{trip_info.created_at}}
+        <br />
+        Last Updated: {{trip_info.updated_at}}
+        <br/>
+        Plan: {{trip_info.plan}}
+        <br/>
+        Created by: {{trip_info.creator.first_name}}
+    </div>
+    <br/>
+    <div class='container'>
+        <p>People who've joined the trip:</p>
+        {% for join in joined %}
+        {{join.first_name}}
+        <br/>
+        {% endfor %}
+    </div>
+</body>

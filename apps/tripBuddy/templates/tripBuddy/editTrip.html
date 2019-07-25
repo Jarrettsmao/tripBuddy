@@ -1,0 +1,63 @@
+<head>
+    <style>
+        #container {
+            border: 1px solid black;
+            display: inline-block;
+            height: 210px;
+            padding: 10px;
+        }
+
+        .enter{
+            margin: 10px;
+        }
+
+        #plan {
+            margin-left: 20px;
+            margin-bottom: -5px;
+        }
+        #cancel {
+            text-align: left;
+            display: inline-block;
+            position: relative;
+            bottom: 38px;
+            margin-left: 130px;
+        }
+        #submit {
+            margin-left: 200px;
+            margin-top: 10px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <h1>Hello {{username}}! Let's edit your trip!</h1>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+            {% endfor %}
+    </div>
+    {% endif %}
+    <div id="container">
+        <form action='/edit/{{trip_info.id}}' method='post'>
+            {% csrf_token %}
+            Destination:<input type='text' name='dest' class='enter' value="{{trip_info.destination}}">
+            <br />
+            Start Date:<input type='date' name='sDate' class='enter' required value="{{trip_info.start_date|date:'Y-m-d' }}">
+            <br />
+            End Date:<input type='date' name='eDate' class='enter' required value="{{trip_info.end_date|date:'Y-m-d' }}">
+            <br />
+            Plan:<textarea name='plan' id='plan' class='enter'>{{trip_info.plan}}</textarea >
+            <br/>
+            <input type='submit' id='submit'>
+        </form>
+        <form action='/dashboard'>
+            {% csrf_token %}
+            <input type='submit' value=Cancel id='cancel'>
+        </form>
+    </div>
+
+</body>
